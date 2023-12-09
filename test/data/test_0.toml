@@ -1,8 +1,23 @@
-# correct.toml
+[[tests]]
+[tests.INPUTS]
+prompt = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone']
+transcription = ['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.']
 
-# INPUTS
-INPUTS.prompt = ["two", "llamas", "and", "a", "frog", "walk", "into", "a"]
-INPUTS.transcription = ["Two", "llamas", "and", "a", "frog", "walk", "into", "a", "cafe."]
+[tests.OUTPUTS]
+idx = 16
 
-# OUTPUTS
-OUTPUTS.idx = 8
+[[tests]]
+[tests.INPUTS]
+prompt = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone']
+transcription = ['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table.']
+
+[tests.OUTPUTS]
+idx = 16
+
+[[tests]]
+[tests.INPUTS]
+prompt = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a']
+transcription = ['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table.']
+
+[tests.OUTPUTS]
+idx = 13

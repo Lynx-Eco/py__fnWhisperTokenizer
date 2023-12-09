@@ -7,14 +7,30 @@ def test_overlapIndex():
     # Read the TOML file
     test_data = toml.load("./test/data/test_0.toml")
 
-    # Extract inputs and expected output
-    prompt = test_data['INPUTS']['prompt']
-    transcription = test_data['INPUTS']['transcription']
-    expected_idx = test_data['OUTPUTS']['idx']
+    # Iterate over each test case
+    for test_case in test_data['tests']:
+        prompt = test_case['INPUTS']['prompt']
+        transcription = test_case['INPUTS']['transcription']
+        expected_idx = test_case['OUTPUTS']['idx']
 
-    # Call the function and assert the result
-    assert overlapIndex(prompt, transcription) == expected_idx, "Test failed: Output index does not match expected value."
+        result_idx = overlapIndex(prompt, transcription)
+        
+        # print expected and actual.
+        print("\n================================")
+        print("INPUTS")
+        print("------")
+        print(f"prompt: {prompt}")
+        print(f"transcription: {transcription}")
+        print("OUTPUTS")
+        print("-------")
+        print(f"expected_idx: {expected_idx}")
+        print("-----------------------------")
+        print(f"result_idx: {result_idx}")
+        
+        
+        # Call the function and assert the result
+        assert result_idx == expected_idx, f"Test failed: Output index {overlapIndex(prompt, transcription)} does not match expected value {expected_idx}."
 
 if __name__ == "__main__":
     test_overlapIndex()
-    print("Test passed: Output index matches expected value.")
+    print("\nAll tests passed: Output indexes match expected values.")
