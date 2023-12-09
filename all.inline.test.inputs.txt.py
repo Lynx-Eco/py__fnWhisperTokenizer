@@ -108,9 +108,12 @@ def processBuffer(buf):
     prompt = confirmedTokens
     
     newTokens = []
-    for elt in buf:
-        idx = overlapIndex(prompt, elt)
-        newTokens.append(elt[idx:])
+    for transcription in buf:
+        idx = overlapIndex(prompt, transcription)
+        print(f"\nidx = overlapIndex(prompt, transcription)\n")
+        print(f"# INPUTS\nprompt: {prompt}\ntranscription: {transcription}\n\n# OUTPUTS\nidx: {idx}\n")
+        
+        newTokens.append(transcription[idx:])
         print(f"overlap: {idx}")
     
     printdeq(newTokens)

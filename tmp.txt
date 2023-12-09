@@ -1,0 +1,71 @@
+I have the following function
+idx = overlapIndex(prompt, transcription)
+
+below is an example of correct inputs and outputs.
+
+```test0.toml
+# correct.toml
+
+# INPUTS
+prompt = ["two", "llamas", "and", "a", "frog", "walk", "into", "a"]
+transcription = ["Two", "llamas", "and", "a", "frog", "walk", "into", "a", "cafe."]
+
+# OUTPUTS
+idx = 8
+
+```
+
+my directory structure is as follows:
+```$ tree
+.
+├── README.md
+├── all.inline.test.inputs.txt.py
+├── src
+│   └── overlapIndex.py
+└── test
+    └── data
+        └── inputs.txt
+
+3 directories, 4 files
+```
+
+```.py
+import collections
+
+def printdeq(deq):
+    print('[')
+    for elt in deq:
+        print(elt)
+    print(']')
+
+def zip_last_first(prompt, transcription, n):
+    # Zip the last n elements of `prompt` with the first n elements of `transcription`
+    return list(zip(prompt[-n:], transcription[:n]))
+
+def count_matching_tuples(tuples_list):
+    # Function to remove periods and commas, and to make the string lowercase
+    def clean_string(s):
+        return s.replace('.', '').replace(',', '').lower()
+
+    # Count the number of tuples where the cleaned strings match
+    return sum([clean_string(left) == clean_string(right) for left, right in tuples_list])
+
+
+bestMatch = 0
+bestMatchIndex = 0
+def overlapIndex(prompt, transcription):
+    maxOverlap = min(len(prompt), len(transcription))
+    bestMatch = 0
+    bestMatchIndex = 0
+    for i in range(1, maxOverlap + 1):
+        thisZip = zip_last_first(prompt, transcription, i)
+        # thisMatches = count_matching_tuples(thisZip)
+        thisMatches = count_matching_tuples(thisZip)
+        if thisMatches > bestMatch:
+            bestMatch = thisMatches
+            bestMatchIndex = i
+    return bestMatchIndex
+```
+
+# request
+please implement `./test/test__overlapIndex.py` which imports the module

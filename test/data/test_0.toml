@@ -1,0 +1,8 @@
+# correct.toml
+
+# INPUTS
+INPUTS.prompt = ["two", "llamas", "and", "a", "frog", "walk", "into", "a"]
+INPUTS.transcription = ["Two", "llamas", "and", "a", "frog", "walk", "into", "a", "cafe."]
+
+# OUTPUTS
+OUTPUTS.idx = 8
