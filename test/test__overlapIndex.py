@@ -5,7 +5,7 @@ from overlapIndex import overlapIndex
 
 def test_overlapIndex():
     # Read the TOML file
-    test_data = toml.load("./test/data/test_0.toml")
+    test_data = toml.load("./test/data/test_overlapIndex.toml")
 
     # Iterate over each test case
     for test_case in test_data['tests']:
@@ -26,6 +26,10 @@ def test_overlapIndex():
         print(f"expected_idx: {expected_idx}")
         print("-----------------------------")
         print(f"result_idx: {result_idx}")
+        
+        # the operative useful tokens out are as follows:
+        new_candidate_tokens = transcription[result_idx:]
+        print(f"{new_candidate_tokens}")
         
         
         # Call the function and assert the result
