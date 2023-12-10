@@ -27,19 +27,33 @@ def localConsensusByN(buffer, n):
         # Find tokens with a count of at least two and append to result
         for token, count in token_counts.items():
             if count >= n:
-                result.append(token)
+                result.append(token.rstrip('\'\"'))
                 break  # Only one consensus token per index
             
     # TOML print result:
     # def localConsensusByN(buffer, n): -> result: [string]
     
     if True:
+        print()
+        print()
         print("[[test]]")
-        print("[INS]")
-        print(f"buffer = {buffer}")
+        print()
+        print("[test.INS]")
+        # print(f"buffer = {buffer}")
+        printdeq(buffer)
+        print
         print(f"n = {n}")
         print()
-        print("[OUTS]")
+        print("[test.OUTS]")
         print(f"result = {result}")
 
     return result
+
+
+
+
+def printdeq(deq):
+    print('buffer = [')
+    for elt in deq:
+        print(f"{elt},")
+    print(']')
