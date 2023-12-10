@@ -15,6 +15,19 @@ def test_localConsensusByN():
 
         # Call the function and assert the result
         actual_result = localConsensusByN(buffer, n)
+
+        # print expected and actual.
+        print("\n================================")
+        print("INPUTS")
+        print("------")
+        print(f"buffer: {buffer}")
+        print(f"n: {n}")
+        print("OUTPUTS")
+        print("-------")
+        print(f"expected_result: {expected_result}")
+        print("-----------------------------")
+        print(f"actual_result: {actual_result}")
+
         assert actual_result == expected_result, f"Test failed: Output {actual_result} does not match expected value {expected_result}."
 
 if __name__ == "__main__":

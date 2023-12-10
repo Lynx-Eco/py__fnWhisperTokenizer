@@ -33,7 +33,7 @@ def localConsensusByN(buffer, n):
     # TOML print result:
     # def localConsensusByN(buffer, n): -> result: [string]
     
-    if False:
+    if True:
         print()
         print()
         print("[[test]]")

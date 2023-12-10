@@ -15,6 +15,7 @@ n = 2
 result = []
 
 
+
 [[test]]
 
 [test.INS]
@@ -30,91 +31,98 @@ n = 2
 result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a']
 
 
+
 [[test]]
 
 [test.INS]
 buffer = [
 [],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a'],
+[],
+['cafe.'],
+['cafe', 'and', 'they', 'see', 'a'],
 ]
 n = 2
 
 [test.OUTS]
-result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe']
+result = ['cafe']
+
 
 
 [[test]]
 
 [test.INS]
 buffer = [
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
+['walk', 'into', 'a'],
+[],
+['and', 'they', 'see', 'a'],
+['and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
 ]
 n = 2
 
 [test.OUTS]
-result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a']
+result = ['and', 'they', 'see', 'a']
+
 
 
 [[test]]
 
 [test.INS]
 buffer = [
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table.'],
+['frog', 'walk', 'into', 'a', 'cafe.'],
+[],
+['robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
+['robber', 'sitting', 'alone', 'at', 'a', 'table.'],
 ]
 n = 2
 
 [test.OUTS]
-result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone']
+result = ['robber', 'sitting', 'alone']
+
 
 
 [[test]]
 
 [test.INS]
 buffer = [
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.'],
+['a', 'cafe', 'and', 'they', 'see', 'a'],
+['in', 'the', 'corner.'],
+['at', 'a', 'table.'],
+['at', 'a', 'table.'],
 ]
 n = 2
 
 [test.OUTS]
-result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table']
+result = ['at', 'a', 'table']
+
 
 
 [[test]]
 
 [test.INS]
 buffer = [
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.', 'The', 'first', 'llama', 'says,', 'Lets', 'invite', 'him', 'to', 'join', 'us.'],
+[],
+[],
+[],
+['The', 'first', 'llama', 'says,', 'Lets', 'invite', 'him', 'to', 'join', 'us.'],
 ]
 n = 2
 
 [test.OUTS]
-result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table']
+result = []
+
 
 
 [[test]]
 
 [test.INS]
 buffer = [
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'robber', 'sitting', 'alone', 'at', 'a', 'table.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.', 'The', 'first', 'llama', 'says,', 'Lets', 'invite', 'him', 'to', 'join', 'us.'],
-['Two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe,', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table.', 'The', 'first', 'llama', 'says,', 'lets', 'invite', 'him', 'to', 'join', 'us.'],
+[],
+[],
+['The', 'first', 'llama', 'says,', 'Lets', 'invite', 'him', 'to', 'join', 'us.'],
+['The', 'first', 'llama', 'says,', 'lets', 'invite', 'him', 'to', 'join', 'us.'],
 ]
 n = 2
 
 [test.OUTS]
-result = ['two', 'llamas', 'and', 'a', 'frog', 'walk', 'into', 'a', 'cafe', 'and', 'they', 'see', 'a', 'rabbit', 'sitting', 'alone', 'at', 'a', 'table', 'the', 'first', 'llama', 'says', 'lets', 'invite', 'him', 'to', 'join', 'us']
+result = ['the', 'first', 'llama', 'says', 'lets', 'invite', 'him', 'to', 'join', 'us']
+
