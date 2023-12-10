@@ -29,6 +29,7 @@ def driver(BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100):
             else:
                 prompt = committed_tokens
             
+            # this one liner filters buffer down to candidateBuffer
             candidateBuffer = [transcription[overlapIndex(prompt, transcription):] for transcription in buffer]
             
             newTokens = localConsensusByN(candidateBuffer, LOCAL_AGREEMENT_N)

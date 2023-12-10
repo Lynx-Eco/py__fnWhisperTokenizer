@@ -46,6 +46,7 @@ def localConsensusByN(buffer, n):
         print()
         print("[test.OUTS]")
         print(f"result = {result}")
+        print()
 
     return result
 
