@@ -38,12 +38,13 @@ def driver(BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100):
             
             newTokens = localConsensusByN(candidateBuffer, LOCAL_AGREEMENT_N)
             
-            # emit `newTokens` to `whisper/confirmedTokens` here.
-            # Format the current datetime as ISO 8601
-            now_iso = datetime.datetime.now().isoformat()
-            # Convert `newTokens` to a string and publish the message
-            message = f"{now_iso} {newTokens}"
-            publish.single("whisper/confirmedTokens", message, hostname="localhost")
+            if len(newTokens):
+                # emit `newTokens` to `whisper/confirmedTokens` here.
+                # Format the current datetime as ISO 8601
+                now_iso = datetime.datetime.now().isoformat()
+                # Convert `newTokens` to a string and publish the message
+                message = f"{now_iso} {newTokens}"
+                publish.single("whisper/confirmedTokens", message, hostname="localhost")
             
             
             committed_tokens.extend(newTokens)
