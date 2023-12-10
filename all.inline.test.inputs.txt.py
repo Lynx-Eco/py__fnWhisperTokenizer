@@ -116,7 +116,9 @@ def processBuffer(buf):
         newTokens.append(transcription[idx:])
         print(f"overlap: {idx}")
     
+    # our context buffer of new token candidates.
     printdeq(newTokens)
+    
     
     consensusTokens = findConsensusTokens(newTokens)
     print(f"\nCONSENSUS THIS ROUND: {consensusTokens}")
@@ -124,9 +126,12 @@ def processBuffer(buf):
     confirmedTokens += consensusTokens
     print(f"CONFIRMED ALL TIME: {confirmedTokens}")
     
-
+BUFFER_LEN = 4
 def build_context_buffer(filename):
-    buffer = collections.deque(maxlen=4)
+    buffer = collections.deque(maxlen=BUFFER_LEN)
+    for i in range(BUFFER_LEN):
+        buffer.append([])
+    
     with open(filename, 'r') as file:
         for line in file:
             print("\n\n================================================")
