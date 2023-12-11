@@ -1,0 +1,17 @@
+[[test]]
+[test.IN]
+lines = [
+    "two llamas",
+    "two llamas walk into",
+    "two llamas walk into a bar"
+]
+
+[test.OUT]
+    [[test.OUT.EmitSequence]]
+    emitTokens = []
+
+    [[test.OUT.EmitSequence]]
+    emitTokens = ["two", "llamas"]
+
+    [[test.OUT.EmitSequence]]
+    emitTokens = ["walk", "into"]

@@ -1,4 +1,7 @@
-def localConsensusByN(buffer, n):
+from typing import List
+
+
+def localConsensusByN(prompt: str, buffer: List[str], n: int) -> List[str]:
     # Initialize the result list
     result = []
     # Check if buffer is not empty and contains lists

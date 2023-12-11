@@ -8,75 +8,70 @@ import datetime
 from overlapIndex import overlapIndex
 
 
-def sanitizedTokensFromLine(line: str):
-    lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
-    
-def insertLineIntoCircularBufferOfToken(line: str, buffer: List[str]):
-    lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
-    buffer.append(lineSanitizedTokens)
-    return buffer
-
-def driverStep(line: str, buffer: List[str], committed: List[str]) -> (List[str], List[str]):
-    buffer = insertLineIntoCircularBufferOfToken(line, buffer)
-    prompt = []
-    if len(committed_tokens) > PROMPT_LEN:
-        prompt = committed_tokens[-PROMPT_LEN:]
-    else:
-        prompt = committed_tokens
-    
-    # this one liner filters buffer down to candidateBuffer
-    candidateBuffer = [transcription[overlapIndex(prompt, transcription):] for transcription in buffer]
-    
-    newTokens = localConsensusByN(candidateBuffer, LOCAL_AGREEMENT_N)
-    
-    if len(newTokens):
-        # emit `newTokens` to `whisper/confirmedTokens` here.
-        # Format the current datetime as ISO 8601
-        now_iso = datetime.datetime.now().isoformat()
-        # Convert `newTokens` to a string and publish the message
-        message = f"{now_iso} {newTokens}"
-        publish.single("whisper/confirmedTokens", message, hostname="localhost")
-    
-    
-    committed_tokens.extend(newTokens)
-    
-    # at the end of each loop .. we have a new committed string..
-
-# the top level driver.  Keeps track of a minimum of state.
-
-
-# committed tokens so far.
-committed_tokens = []
-
-# Global variable to keep track of the number of messages received
-line_number = 0
-
-def driver(BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100):
-
-    # stateful vars
-    
-    # the number of lines we consider at a time for LocalAgreement.
-    buffer = collections.deque(maxlen=BUFFER_LEN)
-    for i in range(BUFFER_LEN):
-        buffer.append([])
-
-
-    # The callback for when the client receives a CONNACK response from the server.
-    def on_connect(client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
-        client.subscribe("whisper/inference-text")
-
-    # The callback for when a PUBLISH message is received from the server.
-    def on_message(client, userdata, msg):
-        global line_number
-        line_number += 1
-        message = msg.payload.decode('utf-8')
-        print(f"Line {line_number}: {message}")
-
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message = on_message
-
-    client.connect("127.0.0.1", 1883, 60)
-    client.loop_forever()
+# entry point to the driver.  Settings for meta params.
+class driver:
+    def __init__(self, BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100):
+        # the number of lines we consider at a time for LocalAgreement.
+        self.ctxBuffer: List[List[str]] = collections.deque(maxlen=BUFFER_LEN)
+        for i in range(BUFFER_LEN):
+            self.ctxBuffer.append([])
+        self.LOCAL_AGREEMENT_N = LOCAL_AGREEMENT_N
+        self.PROMPT_LEN = PROMPT_LEN
+        
+        # committed tokens so far.
+        self.committed_tokens: List[str] = []
+        
+        self.lines_read = 0
+        
+    # primary entry point for driver. stimulate with a transcription line
+    def drive(self, line: str):
+        def insertLineIntoCircularBufferOfToken(line: str, buffer: List[str]):
+            lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
+            buffer.append(lineSanitizedTokens)
+            return buffer
+        
+        # prepare inputs
+        
+        # tokenize and write the line into the buffer.
+        self.ctxBuffer = insertLineIntoCircularBufferOfToken(line, self.ctxBuffer)
+        
+        # prepare prompt.
+        prompt = []
+        if len(self.committed_tokens) > self.PROMPT_LEN:
+            prompt = self.committed_tokens[-self.PROMPT_LEN:]
+        else:
+            prompt = self.committed_tokens
             
+        newTokens: List[str] = self.fnDriverStep(prompt, self.ctxBuffer, self.LOCAL_AGREEMENT_N)
+        self.committed_tokens.extend(newTokens)
+        
+        print("drive with line: " + line)
+        print("prompt:")
+        print(prompt)
+        print()
+        print("ctxBuffer:")
+        print(self.ctxBuffer)
+        print()
+        print("result - newTokens:")
+        print(newTokens)
+        
+
+    # pure functions below this point.  They take inputs and outputs.
+    @staticmethod
+    def fnDriverStep(prompt: List[str], buffer: List[str], LOCAL_AGREEMENT_N: int) -> (List[str]):
+        # this one liner filters buffer down to candidateBuffer
+        candidateBuffer = [transcription[overlapIndex(prompt, transcription):] for transcription in buffer]
+        
+        newTokens = localConsensusByN(prompt, candidateBuffer, LOCAL_AGREEMENT_N)
+        
+        # a side effect! perhaps we should move it?
+        if len(newTokens):
+            # emit `newTokens` to `whisper/confirmedTokens` here.
+            # Format the current datetime as ISO 8601
+            now_iso = datetime.datetime.now().isoformat()
+            # Convert `newTokens` to a string and publish the message
+            message = f"{now_iso} {newTokens}"
+            publish.single("whisper/confirmedTokens", message, hostname="localhost")
+        
+        return newTokens
+        # at the end of each loop .. we have a new committed string..
