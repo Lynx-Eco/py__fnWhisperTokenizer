@@ -8,11 +8,16 @@ import datetime
 from overlapIndex import overlapIndex
 
 
-def driverStep(line: str, buffer: List[str], committed: List[str]) -> (List[str], List[str]):
-
-    # print(line.strip())
-    buffer.append(line.strip().replace('"', '').replace('\'', '').split(' '))
+def sanitizedTokensFromLine(line: str):
+    lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
     
+def insertLineIntoCircularBufferOfToken(line: str, buffer: List[str]):
+    lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
+    buffer.append(lineSanitizedTokens)
+    return buffer
+
+def driverStep(line: str, buffer: List[str], committed: List[str]) -> (List[str], List[str]):
+    buffer = insertLineIntoCircularBufferOfToken(line, buffer)
     prompt = []
     if len(committed_tokens) > PROMPT_LEN:
         prompt = committed_tokens[-PROMPT_LEN:]
