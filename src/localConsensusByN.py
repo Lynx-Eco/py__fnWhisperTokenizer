@@ -36,7 +36,7 @@ def localConsensusByN(prompt: str, buffer: List[str], n: int) -> List[str]:
     # TOML print result:
     # def localConsensusByN(buffer, n): -> result: [string]
     
-    if True:
+    if False:
         print()
         print()
         print("[[test]]")

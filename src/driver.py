@@ -38,14 +38,16 @@ class driver:
         # prepare prompt.
         prompt = []
         if len(self.committed_tokens) > self.PROMPT_LEN:
-            prompt = self.committed_tokens[-self.PROMPT_LEN:]
+            prompt = self.committed_tokens[-self.PROMPT_LEN:].copy()
         else:
-            prompt = self.committed_tokens
+            prompt = self.committed_tokens.copy()
             
         newTokens: List[str] = self.fnDriverStep(prompt, self.ctxBuffer, self.LOCAL_AGREEMENT_N)
         self.committed_tokens.extend(newTokens)
         
-        print("drive with line: " + line)
+        print("======================")
+        print("drive with line:")
+        print(line)
         print("prompt:")
         print(prompt)
         print()
@@ -54,6 +56,9 @@ class driver:
         print()
         print("result - newTokens:")
         print(newTokens)
+        
+        print()
+        print()
         
 
     # pure functions below this point.  They take inputs and outputs.
