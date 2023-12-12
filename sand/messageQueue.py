@@ -35,10 +35,15 @@ def process_messages():
         message = message_queue.get()
         # Process message
         # (Your processing logic here)
-        print(message)
+        # print(message)
         
         # step the driver with message
-        driverInst.drive(message.decode('utf-8'))
+        newTokens: List[str]
+        ctxBuffer: List[List[str]]
+        committed_tokens: List[str]
+        newTokens, ctxBuffer, committed_tokens = driverInst.drive(message.decode('utf-8'))
+        
+        print(newTokens)
         
         message_queue.task_done()
 
