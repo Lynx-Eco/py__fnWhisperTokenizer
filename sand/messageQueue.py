@@ -46,9 +46,7 @@ def process_messages():
         ctxBuffer: List[List[str]]
         committed_tokens: List[str]
         newTokens, ctxBuffer, committed_tokens = driverInst.drive(message.decode('utf-8'))
-        
-        print(newTokens)
-        
+                
         if (len(newTokens)):
             # annotatedPublishMsg = <<isodate>> <<cpu hostname>> newTokens
             # emit `newTokens` to `whisper/confirmedTokens` here.
@@ -60,6 +58,8 @@ def process_messages():
             publish.single("whisper/confirmedTokens", annotatedPublishMsg, hostname="localhost")
             annotatedPublishMsgStr = f"{now_iso} {hostname} {' '.join(newTokens)}"
             publish.single("whisper/confirmedString", annotatedPublishMsgStr, hostname="localhost")
+            
+            print(annotatedPublishMsg)
         
         message_queue.task_done()
 
