@@ -40,6 +40,8 @@ client.subscribe(MQTT_SUBSCRIBE_TOPIC)
 client.loop_start()
 
 # tokenizer `driver` setup
+# Dictionary to store driver instances by topic
+driver_instances = {}
 driverInst = driver(BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100)
 
 # Worker thread function
@@ -47,19 +49,16 @@ def process_messages():
     while True:
         # Retrieve message from queue
         mqtt_message = message_queue.get()
-        str_msg = mqtt_message.decode('utf-8')
+        str_msg = mqtt_message.payload.decode('utf-8')
         
         topic = mqtt_message.topic.split('/')[2]
-        # TODO: handle each topic with its own drive instance.
         
-        # Process message
-        # (Your processing logic here)
-        # print(message)
+        # Check if a driver instance exists for the current topic, if not, create one
+        if topic not in driver_instances:
+            driver_instances[topic] = driver(BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100)
         
-        # step the driver with message
-        newTokens: List[str]
-        ctxBuffer: List[List[str]]
-        committed_tokens: List[str]
+        # Use the topic-specific driver instance to process the message
+        driverInst = driver_instances[topic]
         newTokens, ctxBuffer, committed_tokens = driverInst.drive(str_msg)
                 
         if (len(newTokens)):
@@ -67,12 +66,13 @@ def process_messages():
             # emit `newTokens` to `whisper/confirmedTokens` here.
             # Format the current datetime as ISO 8601 and get the hostname
             now_iso = datetime.datetime.now().isoformat()
-            hostname = socket.gethostname()
+            # hostname = socket.gethostname()
+            hostname = topic
             # Construct the annotated publish message
             annotatedPublishMsg = f"{now_iso} {hostname} {newTokens}"
-            publish.single("whisper/confirmedTokens", annotatedPublishMsg, hostname=MQTT_BROKER_ADDRESS)
+            publish.single("whisper/confirmedTokens/" + hostname, annotatedPublishMsg, hostname=MQTT_BROKER_ADDRESS)
             annotatedPublishMsgStr = f"{now_iso} {hostname} {' '.join(newTokens)}"
-            publish.single("whisper/confirmedString", annotatedPublishMsgStr, hostname=MQTT_BROKER_ADDRESS)
+            publish.single("whisper/aggregateTokens", annotatedPublishMsgStr, hostname=MQTT_BROKER_ADDRESS)
             
             print(annotatedPublishMsg)
         
