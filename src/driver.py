@@ -3,7 +3,6 @@ from typing import List
 
 from localConsensusByN import localConsensusByN
 import paho.mqtt.client as mqtt
-import paho.mqtt.publish as publish
 import datetime
 from overlapIndex import overlapIndex
 
@@ -72,15 +71,6 @@ class driver:
         candidateBuffer = [transcription[overlapIndex(prompt, transcription):] for transcription in buffer]
         
         newTokens = localConsensusByN(prompt, candidateBuffer, LOCAL_AGREEMENT_N)
-        
-        # a side effect! perhaps we should move it?
-        if len(newTokens):
-            # emit `newTokens` to `whisper/confirmedTokens` here.
-            # Format the current datetime as ISO 8601
-            now_iso = datetime.datetime.now().isoformat()
-            # Convert `newTokens` to a string and publish the message
-            message = f"{now_iso} {newTokens}"
-            publish.single("whisper/confirmedTokens", message, hostname="localhost")
         
         return newTokens
         # at the end of each loop .. we have a new committed string..

@@ -1,7 +1,11 @@
+import datetime
+import socket
 import threading
 import queue
 from typing import List
 import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
+
 
 import sys
 sys.path.append('./src')
@@ -44,6 +48,18 @@ def process_messages():
         newTokens, ctxBuffer, committed_tokens = driverInst.drive(message.decode('utf-8'))
         
         print(newTokens)
+        
+        if (len(newTokens)):
+            # annotatedPublishMsg = <<isodate>> <<cpu hostname>> newTokens
+            # emit `newTokens` to `whisper/confirmedTokens` here.
+            # Format the current datetime as ISO 8601 and get the hostname
+            now_iso = datetime.datetime.now().isoformat()
+            hostname = socket.gethostname()
+            # Construct the annotated publish message
+            annotatedPublishMsg = f"{now_iso} {hostname} {newTokens}"
+            publish.single("whisper/confirmedTokens", annotatedPublishMsg, hostname="localhost")
+            annotatedPublishMsgStr = f"{now_iso} {hostname} {' '.join(newTokens)}"
+            publish.single("whisper/confirmedString", annotatedPublishMsgStr, hostname="localhost")
         
         message_queue.task_done()
 
