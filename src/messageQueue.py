@@ -12,7 +12,7 @@ sys.path.append('./src')
 from driver import driver
 
 MQTT_BROKER_PORT = 1883
-MQTT_BROKER_ADDRESS = "127.0.0.1"
+MQTT_BROKER_ADDRESS = "emqx"
 MQTT_SUBSCRIBE_TOPIC = "whisper/inference-text"
 
 # Queue for storing messages
@@ -55,9 +55,9 @@ def process_messages():
             hostname = socket.gethostname()
             # Construct the annotated publish message
             annotatedPublishMsg = f"{now_iso} {hostname} {newTokens}"
-            publish.single("whisper/confirmedTokens", annotatedPublishMsg, hostname="localhost")
+            publish.single("whisper/confirmedTokens", annotatedPublishMsg, hostname=MQTT_BROKER_ADDRESS)
             annotatedPublishMsgStr = f"{now_iso} {hostname} {' '.join(newTokens)}"
-            publish.single("whisper/confirmedString", annotatedPublishMsgStr, hostname="localhost")
+            publish.single("whisper/confirmedString", annotatedPublishMsgStr, hostname=MQTT_BROKER_ADDRESS)
             
             print(annotatedPublishMsg)
         
