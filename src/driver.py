@@ -21,10 +21,11 @@ class driver:
         # committed tokens so far.
         self.committed_tokens: List[str] = []
         
+        self.DEBUG = False
         self.lines_read = 0
         
     # primary entry point for driver. stimulate with a transcription line
-    def drive(self, line: str):
+    def drive(self, line: str) -> (List[str], List[List[str]], List[str]):
         def insertLineIntoCircularBufferOfToken(line: str, buffer: List[str]):
             lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
             buffer.append(lineSanitizedTokens)
@@ -45,20 +46,23 @@ class driver:
         newTokens: List[str] = self.fnDriverStep(prompt, self.ctxBuffer, self.LOCAL_AGREEMENT_N)
         self.committed_tokens.extend(newTokens)
         
-        print("======================")
-        print("drive with line:")
-        print(line)
-        print("prompt:")
-        print(prompt)
-        print()
-        print("ctxBuffer:")
-        print(self.ctxBuffer)
-        print()
-        print("result - newTokens:")
-        print(newTokens)
+        if self.DEBUG:
+            print("======================")
+            print("drive with line:")
+            print(line)
+            print("prompt:")
+            print(prompt)
+            print()
+            print("ctxBuffer:")
+            print(self.ctxBuffer)
+            print()
+            print("result - newTokens:")
+            print(newTokens)
+            
+            print()
+            print()
         
-        print()
-        print()
+        return (newTokens, self.ctxBuffer, self.committed_tokens)
         
 
     # pure functions below this point.  They take inputs and outputs.
