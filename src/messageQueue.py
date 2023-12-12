@@ -13,7 +13,7 @@ from driver import driver
 
 import time
 
-WAIT_TIME = 0
+WAIT_TIME = 16
 print("Sleeping for " + str(WAIT_TIME) + " seconds to ensure the broker container is ready.")
 time.sleep(WAIT_TIME) # Give a healthy amount of time to allow `emqx/emqx` broker to fully hydrate.
 print("LeeeeeEEEEERRRRoooooyyyYYYYYY JJJJJEeeennnnnNNNkkkKKins!!!!!")
