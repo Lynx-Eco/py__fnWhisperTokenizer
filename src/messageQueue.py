@@ -13,21 +13,24 @@ from driver import driver
 
 import time
 
-MQTT_BROKER_WAIT_TIME = 27
-print("Sleeping for " + str(MQTT_BROKER_WAIT_TIME) + " seconds to ensure the broker container is ready.")
-time.sleep(27) # Give a healthy amount of time to allow `emqx/emqx` broker to fully hydrate.
+WAIT_TIME = 0
+print("Sleeping for " + str(WAIT_TIME) + " seconds to ensure the broker container is ready.")
+time.sleep(WAIT_TIME) # Give a healthy amount of time to allow `emqx/emqx` broker to fully hydrate.
 print("LeeeeeEEEEERRRRoooooyyyYYYYYY JJJJJEeeennnnnNNNkkkKKins!!!!!")
 
 MQTT_BROKER_PORT = 1883
 MQTT_BROKER_ADDRESS = "emqx"
 MQTT_SUBSCRIBE_TOPIC = "whisper/inference-text"
 
+MQTT_BROKER_ADDRESS = "127.0.0.1"
+MQTT_SUBSCRIBE_TOPIC = "whisper/transcription/#"
+
 # Queue for storing messages
 message_queue = queue.Queue()
 
 # MQTT message callback
-def on_message(client, userdata, message):
-    message_queue.put(message.payload)
+def on_message(client, userdata, mqtt_message):
+    message_queue.put(mqtt_message)
 
 # MQTT setup
 client = mqtt.Client()
@@ -43,7 +46,12 @@ driverInst = driver(BUFFER_LEN=4, LOCAL_AGREEMENT_N=2, PROMPT_LEN=100)
 def process_messages():
     while True:
         # Retrieve message from queue
-        message = message_queue.get()
+        mqtt_message = message_queue.get()
+        str_msg = mqtt_message.decode('utf-8')
+        
+        topic = mqtt_message.topic.split('/')[2]
+        # TODO: handle each topic with its own drive instance.
+        
         # Process message
         # (Your processing logic here)
         # print(message)
@@ -52,7 +60,7 @@ def process_messages():
         newTokens: List[str]
         ctxBuffer: List[List[str]]
         committed_tokens: List[str]
-        newTokens, ctxBuffer, committed_tokens = driverInst.drive(message.decode('utf-8'))
+        newTokens, ctxBuffer, committed_tokens = driverInst.drive(str_msg)
                 
         if (len(newTokens)):
             # annotatedPublishMsg = <<isodate>> <<cpu hostname>> newTokens
