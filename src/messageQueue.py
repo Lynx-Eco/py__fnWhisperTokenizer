@@ -13,16 +13,16 @@ from driver import driver
 
 import time
 
-WAIT_TIME = 16
+WAIT_TIME = 10
 print("Sleeping for " + str(WAIT_TIME) + " seconds to ensure the broker container is ready.")
 time.sleep(WAIT_TIME) # Give a healthy amount of time to allow `emqx/emqx` broker to fully hydrate.
 print("LeeeeeEEEEERRRRoooooyyyYYYYYY JJJJJEeeennnnnNNNkkkKKins!!!!!")
 
 MQTT_BROKER_PORT = 1883
 MQTT_BROKER_ADDRESS = "emqx"
-MQTT_SUBSCRIBE_TOPIC = "whisper/inference-text"
+# MQTT_SUBSCRIBE_TOPIC = "whisper/inference-text"
 
-MQTT_BROKER_ADDRESS = "127.0.0.1"
+# MQTT_BROKER_ADDRESS = "127.0.0.1"
 MQTT_SUBSCRIBE_TOPIC = "whisper/transcription/#"
 
 # Queue for storing messages

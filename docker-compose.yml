@@ -11,7 +11,7 @@ services:
       - mqtt_network
 
   python-client:
-    image: nargetdev/local-agreement_diarized_v0.1.1:amd64
+    image: nargetdev/local-agreement_diarized_v0.1.2:amd64
     container_name: python_client
     depends_on:
       - emqx
