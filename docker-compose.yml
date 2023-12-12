@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  emqx:
+    image: emqx/emqx:latest
+    container_name: emqx
+    ports:
+      - "1883:1883"
+      - "18083:18083"
+    networks:
+      - mqtt_network
+
+  python-client:
+    image: nargetdev/local-agreement
+    container_name: python_client
+    depends_on:
+      - emqx
+    networks:
+      - mqtt_network
+
+networks:
+  mqtt_network:
+    driver: bridge
