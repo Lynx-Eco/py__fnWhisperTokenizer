@@ -2,8 +2,12 @@ from typing import List
 
 
 def localConsensusByN(buffer: List[str], n: int) -> List[str]:
-    # Initialize the result list
-    result = []
+    # returnVals
+    result: List[str] = []
+    ############################ \returnVals
+
+    
+    
     # Check if buffer is not empty and contains lists
     if not buffer or not all(isinstance(lst, list) for lst in buffer):
         return result
@@ -34,12 +38,3 @@ def localConsensusByN(buffer: List[str], n: int) -> List[str]:
                 break  # Only one consensus token per index
 
     return result
-
-
-
-
-def printdeq(deq):
-    print('buffer = [')
-    for elt in deq:
-        print(f"{elt},")
-    print(']')
