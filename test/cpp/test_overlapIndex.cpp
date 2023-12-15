@@ -1,4 +1,4 @@
-#include "../src/cpp/overlapIndex.h"
+#include "../../src/cpp/overlapIndex.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -6,8 +6,8 @@
 #include <cpptoml.h>
 
 void test_overlapIndex() {
-    // auto config = cpptoml::parse_file("./test/data/test_overlapIndex.toml");
-    auto config = cpptoml::parse_file("../test/data/test_overlapIndex.toml");
+    auto config = cpptoml::parse_file("./test/data/test_overlapIndex.toml");
+    // auto config = cpptoml::parse_file("../test/data/test_overlapIndex.toml");
     auto tests = config->get_table_array("tests");
 
     for (const auto& test : *tests) {

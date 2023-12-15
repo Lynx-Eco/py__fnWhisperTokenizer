@@ -1,7 +1,7 @@
 from typing import List
 
 
-def localConsensusByN(prompt: str, buffer: List[str], n: int) -> List[str]:
+def localConsensusByN(buffer: List[str], n: int) -> List[str]:
     # Initialize the result list
     result = []
     # Check if buffer is not empty and contains lists
@@ -32,24 +32,6 @@ def localConsensusByN(prompt: str, buffer: List[str], n: int) -> List[str]:
             if count >= n:
                 result.append(token.rstrip('\'\"'))
                 break  # Only one consensus token per index
-            
-    # TOML print result:
-    # def localConsensusByN(buffer, n): -> result: [string]
-    
-    if False:
-        print()
-        print()
-        print("[[test]]")
-        print()
-        print("[test.INS]")
-        # print(f"buffer = {buffer}")
-        printdeq(buffer)
-        print
-        print(f"n = {n}")
-        print()
-        print("[test.OUTS]")
-        print(f"result = {result}")
-        print()
 
     return result
 
