@@ -8,38 +8,54 @@
 
 void test_localConsensusByN() {
     auto config = cpptoml::parse_file("./test/data/test_localConsensusByN.toml");
-    // auto config = cpptoml::parse_file("../test/data/test_overlapIndex.toml");
-    auto tests = config->get_table_array("tests");
+    auto tests = config->get_table_array("test");
 
-    // for (const auto& test_case : test_cases) {
-    //     const std::vector<std::string>& buffer = test_case.first;
-    //     int n = test_case.second;
-    //     std::vector<int> expected_result = {}; // Replace with actual expected result
-    //     std::vector<int> actual_result = localConsensusByN(buffer, n);
+    for (const auto& test_table : *tests) {
+        auto ins = test_table->get_table("INS");
+        auto outs = test_table->get_table("OUTS");
 
-    //     std::cout << "\n================================" << std::endl;
-    //     std::cout << "INPUTS" << std::endl;
-    //     std::cout << "------" << std::endl;
-    //     std::cout << "buffer: ";
-    //     for (const auto& val : buffer) {
-    //         std::cout << val << " ";
-    //     }
-    //     std::cout << "\nn: " << n << std::endl;
-    //     std::cout << "OUTPUTS" << std::endl;
-    //     std::cout << "-------" << std::endl;
-    //     std::cout << "expected_result: ";
-    //     for (const auto& val : expected_result) {
-    //         std::cout << val << " ";
-    //     }
-    //     std::cout << "\n-----------------------------" << std::endl;
-    //     std::cout << "actual_result: ";
-    //     for (const auto& val : actual_result) {
-    //         std::cout << val << " ";
-    //     }
-    //     std::cout << std::endl;
+        std::vector<std::vector<std::string>> buffer;
+        for (const auto& line : *ins->get_array_of<cpptoml::array>("buffer")) {
+            std::vector<std::string> line_data;
+            for (const auto& value : *line) {
+                line_data.push_back(value->as<std::string>()->get());
+            }
+            buffer.push_back(line_data);
+        }
+        int n = *ins->get_as<int>("n");
+        std::vector<std::string> expected_result;
+        for (const auto& value : *outs->get_array_of<std::string>("result")) {
+            expected_result.push_back(value);
+        }
 
-    //     assert(actual_result == expected_result && "Test failed: Output does not match expected value.");
-    // }
+        std::vector<std::string> actual_result = localConsensusByN(buffer, n);
+
+        std::cout << "\n================================" << std::endl;
+        std::cout << "INPUTS" << std::endl;
+        std::cout << "------" << std::endl;
+        std::cout << "buffer: ";
+        for (const auto& line : buffer) {
+            for (const auto& val : line) {
+                std::cout << val << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "n: " << n << std::endl;
+        std::cout << "OUTPUTS" << std::endl;
+        std::cout << "-------" << std::endl;
+        std::cout << "expected_result: ";
+        for (const auto& val : expected_result) {
+            std::cout << val << " ";
+        }
+        std::cout << "\n-----------------------------" << std::endl;
+        std::cout << "actual_result: ";
+        for (const auto& val : actual_result) {
+            std::cout << val << " ";
+        }
+        std::cout << std::endl;
+
+        assert(actual_result == expected_result && "Test failed: Output does not match expected value.");
+    }
 }
 
 int main() {
