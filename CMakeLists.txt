@@ -15,3 +15,6 @@ include_directories(include)
 # If cpptoml is not header-only, find and link the library
 # find_package(cpptoml REQUIRED)
 # target_link_libraries(overlapIndexTest cpptoml)
+
+# include tomlplusplus
+include_directories(tomlplusplus/include)
