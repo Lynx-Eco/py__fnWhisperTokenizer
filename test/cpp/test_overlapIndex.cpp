@@ -1,4 +1,4 @@
-#include "../../src/cpp/overlapIndex.h"
+#include "../src/cpp/overlapIndex.hpp"
 #include <iostream>
 #include <vector>
 #include <string>

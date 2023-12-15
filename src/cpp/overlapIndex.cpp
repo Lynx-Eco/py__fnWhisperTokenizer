@@ -1,4 +1,4 @@
-#include "overlapIndex.h"
+#include "overlapIndex.hpp"
 #include <algorithm>
 #include <cctype>
 #include <locale>
