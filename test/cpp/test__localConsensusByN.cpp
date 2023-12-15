@@ -7,7 +7,8 @@
 
 
 void test_localConsensusByN() {
-    auto config = cpptoml::parse_file("./test/data/test_localConsensusByN.toml");
+    // auto config = cpptoml::parse_file("./test/data/test_localConsensusByN.toml");
+    auto config = cpptoml::parse_file("../test/data/test_localConsensusByN.toml");
     auto tests = config->get_table_array("test");
 
     for (const auto& test_table : *tests) {
@@ -15,12 +16,17 @@ void test_localConsensusByN() {
         auto outs = test_table->get_table("OUTS");
 
         std::vector<std::vector<std::string>> buffer;
-        for (const auto& line : *ins->get_array_of<cpptoml::array>("buffer")) {
-            std::vector<std::string> line_data;
-            for (const auto& value : *line) {
-                line_data.push_back(value->as<std::string>()->get());
+        auto buffer_array = ins->get_array_of<cpptoml::array>("buffer");
+        if (buffer_array) {
+            for (const auto& line : *buffer_array) {
+                std::vector<std::string> line_data;
+                for (const auto& value : *line) {
+                    line_data.push_back(value->as<std::string>()->get());
+                }
+                buffer.push_back(line_data);
             }
-            buffer.push_back(line_data);
+        } else {
+            std::cerr << "Error reading buffer from TOML file." << std::endl;
         }
         int n = *ins->get_as<int>("n");
         std::vector<std::string> expected_result;
