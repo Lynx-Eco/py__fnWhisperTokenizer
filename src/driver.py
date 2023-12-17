@@ -70,7 +70,7 @@ class driver:
         # this one liner filters buffer down to candidateBuffer
         candidateBuffer = [transcription[overlapIndex(prompt, transcription):] for transcription in buffer]
         
-        newTokens = localConsensusByN(prompt, candidateBuffer, LOCAL_AGREEMENT_N)
+        newTokens = localConsensusByN(candidateBuffer, LOCAL_AGREEMENT_N)
         
         return newTokens
         # at the end of each loop .. we have a new committed string..

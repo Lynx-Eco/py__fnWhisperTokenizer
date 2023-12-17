@@ -1,11 +1,17 @@
 # IN
+
+# vector<vector<string>>
 buffer = [
 ['frog', 'walk', 'into', 'a', 'cafe.'],
 [],
 ['robber', 'sitting', 'alone', 'in', 'the', 'corner.'],
 ['robber', 'sitting', 'alone', 'at', 'a', 'table.'],
 ]
+
+# int
 n = 2
 
 # OUT
+
+# vector<string>
 return = ['robber', 'sitting', 'alone']
