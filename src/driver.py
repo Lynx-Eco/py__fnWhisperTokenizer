@@ -24,6 +24,7 @@ class driver:
         self.lines_read = 0
         
     # primary entry point for driver. stimulate with a transcription line
+    # drive(...) -> (newTokens: List[str], self.ctxBuffer: List[List[str]], self.committed_tokens)
     def drive(self, line: str) -> (List[str], List[List[str]], List[str]):
         def insertLineIntoCircularBufferOfToken(line: str, buffer: List[str]):
             lineSanitizedTokens = line.strip().replace('"', '').replace('\'', '').split(' ')
