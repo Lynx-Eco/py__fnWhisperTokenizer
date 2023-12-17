@@ -1,0 +1,4 @@
+ok were strugling to parse out this .toml dynamically.  Instead lets test `std::vector<std::string> loca
+lConsensusByN(const std::vector<std::vector<std::string>>& buffer, int n)` with statically encoded inputs. P
+lease translate the test/data/localConsensusByN/t0__localConsensus.toml file into statically coded `const st
+d::vector<std::vector<std::string>>& buffer` and `int n`
