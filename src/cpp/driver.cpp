@@ -3,6 +3,7 @@
 #include "overlapIndex.hpp"
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 driver::driver(int BUFFER_LEN, int LOCAL_AGREEMENT_N, int PROMPT_LEN)
     : LOCAL_AGREEMENT_N(LOCAL_AGREEMENT_N), PROMPT_LEN(PROMPT_LEN), DEBUG(false), lines_read(0) {
