@@ -5,7 +5,14 @@
 void test_driver() {
     // Create an instance of the driver class
     driver driverInst(4, 2, 100);
-    std::vector<std::string> lines = {"a sample", "a sample line", "sample line. and more"};
+    std::vector<std::string> lines = {
+            "a sample",
+            "a sample line",
+            "sample line. and more",
+            "sample line. and more for sure",
+            "sample line. and more for sure brah",
+            "sample line. and more for sure brah hah",
+    };
     std::vector<std::string> expected_tokens = {"sample", "line", "and", "more"};
 
     for (const auto& line : lines) {
