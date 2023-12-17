@@ -4,14 +4,6 @@
 #include <vector>
 #include <string>
 
-int main() {
-    try {
-#include "../src/cpp/localConsensusByN.hpp"
-#include "../tomlplusplus/include/toml++/toml.hpp"
-#include <iostream>
-#include <vector>
-#include <string>
-
 using namespace std;
 
 int main() {
@@ -44,10 +36,6 @@ int main() {
     } catch (const exception& err) {
         cerr << "Unhandled exception: " << err.what() << endl;
         return 1;
-    }
-
-    return 0;
-}
     }
 
     return 0;
