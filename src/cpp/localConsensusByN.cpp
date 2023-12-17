@@ -22,15 +22,13 @@ std::vector<std::string> localConsensusByN(const std::vector<std::vector<std::st
 
             std::string token = inferenceTokens[i];
             std::transform(token.begin(), token.end(), token.begin(), ::tolower);
-            token.erase(std::remove(token.end() - 2, token.end(), '.'), token.end());
-            token.erase(std::remove(token.end() - 2, token.end(), ','), token.end());
 
             ++token_counts[token];
         }
 
         for (const auto& [token, count] : token_counts) {
             if (count >= n) {
-                result.push_back(token.substr(0, token.size() - std::min(token.size(), static_cast<size_t>(2))));
+                result.push_back(token);
                 break;
             }
         }
